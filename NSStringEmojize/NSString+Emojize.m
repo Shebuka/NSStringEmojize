@@ -1,23 +1,26 @@
 //
 //  NSString+Emojize.m
-//  Field Recorder
+//  NSStringEmojize
 //
-//  Created by Jonathan Beilin on 11/5/12.
-//  Copyright (c) 2014 DIY. All rights reserved.
+//  Modified by Anton Shebukov on 30/01/15
+//  to support Facebook emoticons.
+//  Copyright (c) 2015 Feedback Italia S.p.A. All rights reserved.
 //
+//  Created by Jonathan Beilin on 11/05/12.
+//  Copyright (c) 2012-2014 DIY. All rights reserved.
+//
+//  Inspired by https://github.com/larsschwegmann/Emoticonizer
 
 #import "NSString+Emojize.h"
 #import "emojis.h"
 
 @implementation NSString (Emojize)
 
-- (NSString *)emojizedString
-{
+- (NSString *)emojizedString {
     return [NSString emojizedStringWithString:self];
 }
 
-+ (NSString *)emojizedStringWithString:(NSString *)text
-{
++ (NSString *)emojizedStringWithString:(NSString *)text {
     static dispatch_once_t onceToken;
     static NSRegularExpression *regex = nil;
     dispatch_once(&onceToken, ^{
@@ -39,6 +42,18 @@
          }
      }];
     
+    NSError *error = nil;
+    for (NSString *key in self.emojiEmoticons) {
+        NSString *pattern = [NSString stringWithFormat:@"(^|\\s)(%@)(\\s|$)", [NSRegularExpression escapedPatternForString:key]];
+        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:NSRegularExpressionCaseInsensitive error:&error];
+        
+        NSArray *matches = [regex matchesInString:resultText options:0 range:NSMakeRange(0, [resultText length])];
+        for (NSTextCheckingResult *match in matches) {
+            NSRange matchRange = match.range;
+            resultText = [resultText stringByReplacingOccurrencesOfString:key withString:(NSString *)[self.emojiEmoticons objectForKey:key] options:0 range:matchRange];
+        }
+    }
+    
     return resultText;
 }
 
@@ -49,6 +64,15 @@
         _emojiAliases = EMOJI_HASH;
     });
     return _emojiAliases;
+}
+
++ (NSDictionary *)emojiEmoticons {
+    static NSDictionary *_emojiEmoticons;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _emojiEmoticons = EMOJI_EMOTICONS_HASH;
+    });
+    return _emojiEmoticons;
 }
 
 @end
