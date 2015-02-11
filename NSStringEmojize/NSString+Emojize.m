@@ -44,14 +44,16 @@
     
     NSError *error = nil;
     for (NSString *key in self.emojiEmoticons) {
-        NSString *pattern = [NSString stringWithFormat:@"(^|\\s)(%@)(\\s|$)", [NSRegularExpression escapedPatternForString:key]];
+        NSString *pattern = [NSString stringWithFormat:@"(?<=^|\\s)(%@)(?=\\s|[^\"-(*+\\-/->@-~]|$)", [NSRegularExpression escapedPatternForString:key]];
         NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:NSRegularExpressionCaseInsensitive error:&error];
         
-        NSArray *matches = [regex matchesInString:resultText options:0 range:NSMakeRange(0, [resultText length])];
-        for (NSTextCheckingResult *match in matches) {
-            NSRange matchRange = match.range;
-            resultText = [resultText stringByReplacingOccurrencesOfString:key withString:(NSString *)[self.emojiEmoticons objectForKey:key] options:0 range:matchRange];
-        }
+        resultText = [regex stringByReplacingMatchesInString:resultText options:0 range:NSMakeRange(0, [resultText length]) withTemplate:(NSString *)[self.emojiEmoticons objectForKey:key]];
+        
+//        NSArray *matches = [regex matchesInString:resultText options:0 range:NSMakeRange(0, [resultText length])];
+//        for (NSTextCheckingResult *match in matches) {
+//            NSRange matchRange = match.range;
+//            resultText = [resultText stringByReplacingOccurrencesOfString:key withString:(NSString *)[self.emojiEmoticons objectForKey:key] options:0 range:matchRange];
+//        }
     }
     
     return resultText;
