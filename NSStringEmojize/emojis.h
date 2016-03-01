@@ -4,7 +4,7 @@
 //
 //  Modified by Anton Shebukov on 30/01/15
 //  to support Facebook emoticons.
-//  Copyright (c) 2015-2016 Feedback Italia S.p.A. All rights reserved.
+//  Copyright (c) 2015-2016 Feedback Italia S.r.l. All rights reserved.
 //
 //  Created by Andrew Sliwinski on 01/06/14.
 //  Copyright (c) 2014 DIY. All rights reserved.
@@ -929,6 +929,8 @@
     @":D"          : @"😃", \
     @":-D"         : @"😃", \
     @"^_^"         : @"😄", \
+    @"XD"          : @"😆", \
+    @"X-D"         : @"😆", \
     @"8)"          : @"😎", \
     @"8-)"         : @"😎", \
     @"B)"          : @"😎", \
@@ -958,8 +960,10 @@
     @"|)"          : @"😪", \
     @"|-)"         : @"😪", \
     @"(inlove)"    : @"😍", \
+    @">:)"         : @"😈", \
     @"]:)"         : @"😈", \
     @"3:)"         : @"😈", \
+    @">:-)"        : @"😈", \
     @"]:-)"        : @"😈", \
     @"3:-)"        : @"😈", \
     @"(devil)"     : @"😈", \

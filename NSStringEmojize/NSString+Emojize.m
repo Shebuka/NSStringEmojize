@@ -4,7 +4,7 @@
 //
 //  Modified by Anton Shebukov on 30/01/15
 //  to support Facebook emoticons.
-//  Copyright (c) 2015 Feedback Italia S.p.A. All rights reserved.
+//  Copyright (c) 2015-2016 Feedback Italia S.r.l. All rights reserved.
 //
 //  Created by Jonathan Beilin on 11/05/12.
 //  Copyright (c) 2012-2014 DIY. All rights reserved.
